@@ -222,6 +222,8 @@ public class Clientes extends javax.swing.JFrame {
         }
 
         JOptionPane.showMessageDialog(rootPane, "Usuário cadastrado com sucesso!");
+        
+        refresh();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed

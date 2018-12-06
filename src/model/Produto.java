@@ -149,7 +149,7 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return "util.Produto[ idProduto=" + idProduto + " ]";
+        return idProduto + " - " + nomeProduto;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

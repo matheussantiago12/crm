@@ -6,10 +6,13 @@
 package view;
 
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
+import model.Fornecedor;
 import model.Produto;
+import repository.FornecedorRep;
 import repository.ProdutoRep;
 import tabelas.FuncionarioTabela;
 import tabelas.ProdutoTabela;
@@ -22,7 +25,9 @@ public class Produtos extends javax.swing.JFrame {
 
     Produto p = new Produto();
     ProdutoRep prep = new ProdutoRep();
+    FornecedorRep frep = new FornecedorRep();
     ProdutoTabela pt = new ProdutoTabela();      
+    List<Fornecedor> fornecedores = frep.listar();
     
     public Produtos() {
         initComponents();
@@ -35,6 +40,7 @@ public class Produtos extends javax.swing.JFrame {
         p.setQtdeEstoque(Integer.parseInt(txtEstoque.getText()));
         p.setPrecoCusto(Double.parseDouble(txtCusto.getText()));
         p.setPrecoVenda(Double.parseDouble(txtVenda.getText()));
+        p.setFornecedor(fornecedores.get(cmbFornecedores.getSelectedIndex()));
     }
     
     public void filtrar(String query){
@@ -77,7 +83,7 @@ public class Produtos extends javax.swing.JFrame {
         txtVenda = new javax.swing.JTextField();
         txtEstoque = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbFornecedores = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -158,7 +164,7 @@ public class Produtos extends javax.swing.JFrame {
 
         jLabel5.setText("Estoque");
 
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, fornecedorList, jComboBox1);
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, fornecedorList, cmbFornecedores);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jLabel7.setText("Fornecedor");
@@ -198,7 +204,7 @@ public class Produtos extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(txtVenda, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(cmbFornecedores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -237,7 +243,7 @@ public class Produtos extends javax.swing.JFrame {
                     .addComponent(txtCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -331,11 +337,11 @@ public class Produtos extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JComboBox<String> cmbFornecedores;
     private javax.persistence.EntityManager crmPUEntityManager;
     private java.util.List<model.Fornecedor> fornecedorList;
     private javax.persistence.Query fornecedorQuery;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -37,7 +37,6 @@ public class Fornecedores extends javax.swing.JFrame {
         Pessoa pessoa = (Pessoa) cmbPessoas.getSelectedItem();
         f.setPessoa(pessoa);
         System.out.println(pessoa.getIdPessoa());
-        //f.setPessoa(pessoas.get(cmbPessoas.getSelectedIndex()));
     }
     
     public void filtrar(String query){
@@ -242,7 +241,7 @@ public class Fornecedores extends javax.swing.JFrame {
             f = fi.get(tblFornecedores.getSelectedRow());
             f.setIdFornecedor((int) fi.getValueAt(tblFornecedores.getSelectedRow(), 0));
             definirAtributos();
-            //frep.alterar(f);
+            frep.alterar(f);
             JOptionPane.showMessageDialog(rootPane, "Fornecedor alterado com sucesso!");
             txtCNPJ.setText("");
         } else {

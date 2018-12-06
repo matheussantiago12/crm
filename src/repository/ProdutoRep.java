@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Fornecedor;
+import model.Pessoa;
 import model.Produto;
 import util.ConexaoBD;
 
@@ -14,8 +15,10 @@ public class ProdutoRep {
 
     private static final String INSERT = "insert into produto (id_fornecedor, nome_produto, qtde_estoque, preco_custo, preco_venda) values (?,?,?,?,?);";
 
-    private static final String SELECT = "select id_produto, id_fornecedor, nome_produto, qtde_estoque, preco_custo, preco_venda from produto";
+    private static final String SELECT = "select id_produto, id_fornecedor, nome_produto, qtde_estoque, preco_custo, preco_venda from produto order by id_fornecedor";
 
+    private static final String SELECT_FORNECEDOR = "select cnpj_fornecedor, nome_contato from fornecedor inner join produto on fornecedor.id_fornecedor = produto.id_fornecedor order by fornecedor.id_fornecedor";
+    
     private static final String DELETE = "delete from produto where id_produto = ?";
 
     private static final String UPDATE = "update produto set nome_produto = ?, qtde_estoque = ?, preco_custo = ?, preco_venda = ? where id_produto = ?";
@@ -80,7 +83,6 @@ public class ProdutoRep {
 
             while (res.next()) {
                 Produto p = new Produto();
-                Fornecedor f = new Fornecedor();
                 p.setIdProduto(res.getInt("id_produto"));
                 p.setNomeProduto(res.getString("nome_produto"));
                 p.setQtdeEstoque(res.getInt("qtde_estoque"));
@@ -93,5 +95,27 @@ public class ProdutoRep {
             System.out.println("Ocorreu um erro ao tentar buscar os produtos do banco: " + ex.getMessage());
         }
         return produto;
+    }
+    
+    public List<Fornecedor> listarFornecedor() {
+        List<Fornecedor> fornecedores = new ArrayList<>();
+        ResultSet res;
+
+        try {
+            pstm = connection.prepareStatement(SELECT_FORNECEDOR);
+            res = pstm.executeQuery();
+
+            while (res.next()) {
+                Fornecedor f = new Fornecedor();
+                f.setCnpjFornecedor(res.getString("cnpj_fornecedor"));
+                f.setNomeContato(res.getString("nome_contato"));
+
+                fornecedores.add(f);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro ao tentar buscar os Fornecedor do banco: " + ex.getMessage());
+        }
+        return fornecedores;
     }
 }

@@ -11,7 +11,7 @@ public class FuncionarioTabela extends AbstractTableModel {
     private FuncionarioRep frep = new FuncionarioRep();
     private PessoaRep prep = new PessoaRep();
     private List<Funcionario> funcionarios = frep.listar();
-    private List<Pessoa> pessoas = prep.listar();
+    private List<Pessoa> pessoas = frep.listarPessoaFuncionario();
     
     @Override
     public int getRowCount() {
@@ -38,7 +38,7 @@ public class FuncionarioTabela extends AbstractTableModel {
             case 2: 
                 return funcionarios.get(rowIndex).getSenhaFuncionario();   
             case 3:
-                return pessoas.get(rowIndex).getNomePessoa(); 
+                return pessoas.get(rowIndex).getNomePessoa();
             case 4:
                 return pessoas.get(rowIndex).getEmailPessoa(); 
             case 5:

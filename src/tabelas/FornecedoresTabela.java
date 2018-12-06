@@ -10,9 +10,8 @@ import repository.PessoaRep;
 public class FornecedoresTabela extends AbstractTableModel {
 
     private FornecedorRep frep = new FornecedorRep();
-    private PessoaRep prep = new PessoaRep();
     private List<Fornecedor> fornecedores = frep.listar();
-    private List<Pessoa> pessoas = prep.listar();
+    private List<Pessoa> pessoas = frep.listarPessoaFuncionario();
 
     @Override
     public int getRowCount() {

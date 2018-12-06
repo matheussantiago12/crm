@@ -11,8 +11,7 @@ public class ProdutoTabela extends AbstractTableModel {
 
     private ProdutoRep prep = new ProdutoRep();
     private List<Produto> produtos = prep.listar();
-    private FornecedorRep frep = new FornecedorRep();
-    private List<Fornecedor> fornecedores = frep.listar();
+    private List<Fornecedor> fornecedores = prep.listarFornecedor();
 
     @Override
     public int getRowCount() {

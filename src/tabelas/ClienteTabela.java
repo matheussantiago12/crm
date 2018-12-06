@@ -10,9 +10,8 @@ import repository.PessoaRep;
 public class ClienteTabela extends AbstractTableModel {
 
     private ClienteRep crep = new ClienteRep();
-    private PessoaRep prep = new PessoaRep();
     private List<Cliente> clientes = crep.listar();
-    private List<Pessoa> pessoas = prep.listar();
+    private List<Pessoa> pessoas = crep.listarPessoaCliente();
 
     @Override
     public int getRowCount() {

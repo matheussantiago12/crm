@@ -35,6 +35,7 @@ public class Funcionarios extends javax.swing.JFrame {
     public void refresh() {
         fi = new FuncionarioTabela();
         tblFuncionario.setModel(fi);
+        
     }
 
     public void definirAtributos() {

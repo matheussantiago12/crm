@@ -7,13 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Fornecedor;
+import model.Pessoa;
 import util.ConexaoBD;
 
 public class FornecedorRep {
 
     private static final String INSERT = "insert into fornecedor (cnpj_fornecedor, nome_contato, id_pessoa) values (?, ?, ?);";
 
-    private static final String SELECT = "select id_fornecedor, cnpj_fornecedor, nome_contato from fornecedor";
+    private static final String SELECT = "select id_fornecedor, cnpj_fornecedor, nome_contato, id_pessoa from fornecedor order by id_pessoa";
+
+    private static final String SELECT_PESSOA = "select nome_pessoa, email_pessoa, tel_pessoa from pessoa inner join fornecedor on pessoa.id_pessoa = fornecedor.id_pessoa order by pessoa.id_pessoa";
 
     private static final String DELETE = "delete from fornecedor where id_fornecedor = ?";
 
@@ -82,5 +85,28 @@ public class FornecedorRep {
             System.out.println("Ocorreu um erro ao tentar buscar os fornecedores do banco: " + ex.getMessage());
         }
         return fornecedor;
+    }
+
+    public List<Pessoa> listarPessoaFuncionario() {
+        List<Pessoa> pessoa = new ArrayList<>();
+        ResultSet res;
+
+        try {
+            pstm = connection.prepareStatement(SELECT_PESSOA);
+            res = pstm.executeQuery();
+
+            while (res.next()) {
+                Pessoa p = new Pessoa();
+                p.setNomePessoa(res.getString("nome_pessoa"));
+                p.setEmailPessoa(res.getString("email_pessoa"));
+                p.setTelPessoa(res.getString("tel_pessoa"));
+
+                pessoa.add(p);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro ao tentar buscar os funcionários do banco: " + ex.getMessage());
+        }
+        return pessoa;
     }
 }
