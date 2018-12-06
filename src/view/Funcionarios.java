@@ -13,7 +13,6 @@ import javax.swing.table.TableRowSorter;
 import tabelas.FuncionarioTabela;
 import repository.FuncionarioRep;
 import model.Funcionario;
-import tabelas.ProdutoTabela;
 
 public class Funcionarios extends javax.swing.JFrame {
 
@@ -25,7 +24,7 @@ public class Funcionarios extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         refresh();
-        
+
     }
 
     public void refresh() {
@@ -36,15 +35,12 @@ public class Funcionarios extends javax.swing.JFrame {
     public void definirAtributos() {
         f.setLoginFuncionario(txtLogin.getText());
         f.setSenhaFuncionario(txtSenha.getText());
-        f.setNomeFuncionario(txtNome.getText());
-        f.setEmailFuncionario(txtEmail.getText());
-        f.setTelFuncionario(txtTelefone.getText());
     }
-    
-    public void filtrar(String query){
-       TableRowSorter<FuncionarioTabela> tr = new TableRowSorter<FuncionarioTabela>(fi);
-       tblFuncionario.setRowSorter(tr);
-       tr.setRowFilter(RowFilter.regexFilter(query));
+
+    public void filtrar(String query) {
+        TableRowSorter<FuncionarioTabela> tr = new TableRowSorter<FuncionarioTabela>(fi);
+        tblFuncionario.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(query));
     }
 
     @SuppressWarnings("unchecked")
@@ -60,14 +56,8 @@ public class Funcionarios extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         txtSenha = new javax.swing.JPasswordField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
-        txtTelefone = new javax.swing.JTextField();
         txtLogin = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -139,15 +129,9 @@ public class Funcionarios extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Email");
-
-        jLabel4.setText("Telefone");
-
         jLabel6.setText("Senha");
 
         jLabel7.setText("Login");
-
-        jLabel1.setText("Nome");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,40 +150,21 @@ public class Funcionarios extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtLogin))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(81, 81, 81)
+                        .addComponent(btnAlterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAlterar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)))))
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -213,29 +178,18 @@ public class Funcionarios extends javax.swing.JFrame {
                 .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2))
-                    .addComponent(jLabel1))
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
                     .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExcluir)
                     .addComponent(btnAlterar)
                     .addComponent(btnNovo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -250,11 +204,8 @@ public class Funcionarios extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         // TODO add your handling code here:
-        if (txtNome.getText().isEmpty()
-                || txtEmail.getText().isEmpty()
-                || txtLogin.getText().isEmpty()
-                || txtSenha.getText().isEmpty()
-                || txtTelefone.getText().isEmpty()) {
+        if (txtLogin.getText().isEmpty()
+                || txtSenha.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar");
 
@@ -291,15 +242,12 @@ public class Funcionarios extends javax.swing.JFrame {
 
         if (tblFuncionario.getSelectedRow() >= 0) {
             f = fi.getFuncionario(tblFuncionario.getSelectedRow());
-            f.setId((int) fi.getValueAt(tblFuncionario.getSelectedRow(), 0));
+            f.setIdFuncionario((int) fi.getValueAt(tblFuncionario.getSelectedRow(), 0));
             definirAtributos();
             frep.salvar(f);
             JOptionPane.showMessageDialog(rootPane, "Funcionário alterado com sucesso!");
             txtLogin.setText("");
             txtSenha.setText("");
-            txtNome.setText("");
-            txtEmail.setText("");
-            txtTelefone.setText("");
         } else {
             JOptionPane.showMessageDialog(rootPane, "Selecione um funcionário para alterar!");
         }
@@ -309,9 +257,6 @@ public class Funcionarios extends javax.swing.JFrame {
     private void tblFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFuncionarioMouseClicked
         txtLogin.setText(fi.getValueAt(tblFuncionario.getSelectedRow(), 1).toString());
         txtSenha.setText(fi.getValueAt(tblFuncionario.getSelectedRow(), 2).toString());
-        txtNome.setText(fi.getValueAt(tblFuncionario.getSelectedRow(), 3).toString());
-        txtEmail.setText(fi.getValueAt(tblFuncionario.getSelectedRow(), 4).toString());
-        txtTelefone.setText(fi.getValueAt(tblFuncionario.getSelectedRow(), 5).toString());
     }//GEN-LAST:event_tblFuncionarioMouseClicked
 
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
@@ -375,19 +320,13 @@ public class Funcionarios extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTable tblFuncionario;
-    public javax.swing.JTextField txtEmail;
     public javax.swing.JTextField txtLogin;
-    public javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPesquisa;
     public javax.swing.JPasswordField txtSenha;
-    public javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }
