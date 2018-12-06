@@ -1,9 +1,7 @@
 package Teste;
 
-import java.lang.annotation.Annotation;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.xml.validation.Schema;
 
 //testando
 
