@@ -14,13 +14,13 @@ import util.ConexaoBD;
 
 public class VisitaRep {
 
-    private static final String INSERT = "insert into visita (data_visita, id_funcionario, id_cliente) values (?,?,?,?);";
+    private static final String INSERT = "insert into visita (data_visita, id_funcionario, id_cliente) values (?,?,?);";
 
-    private static final String SELECT = "select id_visita, data_visita, id_funcionario, id_cliente from visita";
+    private static final String SELECT = "select id_visita, data_visita from visita";
 
-    private static final String SELECT_FUNCIONARIO = "select id_funcionario, login_funcionario from funcionario inner join visita on funcionario.id_funcionario = visita.id_funcionario order by visita.id_visita";
+    private static final String SELECT_FUNCIONARIO = "select login_funcionario from funcionario inner join visita on funcionario.id_funcionario = visita.id_funcionario";
 
-    private static final String SELECT_CLIENTE = "select id, cpf_cliente from cliente inner join visista on cliente.id = visita.id_cliente order by visita.id_visita";
+    private static final String SELECT_CLIENTE = "select id, cpf_cliente from cliente inner join visita on cliente.id = visita.id_cliente order by visita.id_visita";
 
     private static final String DELETE = "delete from visita where id_visita = ?";
 
@@ -119,7 +119,6 @@ public class VisitaRep {
 
             if (res.next()) {
                 Funcionario f = new Funcionario();
-                f.setIdFuncionario(res.getInt("id_funcionario"));
                 f.setLoginFuncionario(res.getString("login_funcionario"));
                 funcionarios.add(f);
             }

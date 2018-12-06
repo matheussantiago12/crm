@@ -8,6 +8,7 @@ package view;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Cliente;
+import model.Fornecedor;
 import model.Produto;
 import model.Venda;
 import repository.ClienteRep;
@@ -20,29 +21,29 @@ import tabelas.VendasTabela;
  * @author Aluno
  */
 public class Vendas extends javax.swing.JFrame {
-    
+
     Venda v = new Venda();
     VendasTabela vt;
-    
+
     ClienteRep crep = new ClienteRep();
     ProdutoRep prep = new ProdutoRep();
     VendaRep vrep = new VendaRep();
-    
+
     List<Cliente> clientes = crep.listar();
     List<Produto> produtos = prep.listar();
-    
+
     public Vendas() {
         initComponents();
         this.setLocationRelativeTo(null);
         refresh();
     }
-    
+
     public void definirAtributos() {
         v.setValorVenda(Integer.parseInt(txtValor.getText()));
         v.setProduto(produtos.get(cmbProdutos.getSelectedIndex()));
         v.setCliente(clientes.get(cmbClientes.getSelectedIndex()));
     }
-    
+
     public void refresh() {
         vt = new VendasTabela();
         tblVendas.setModel(vt);
@@ -127,6 +128,11 @@ public class Vendas extends javax.swing.JFrame {
         });
 
         jButton3.setText("Remover");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -196,7 +202,7 @@ public class Vendas extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        Menu m= new Menu();
+        Menu m = new Menu();
         m.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -206,17 +212,33 @@ public class Vendas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtValorActionPerformed
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-         if (txtValor.getText().isEmpty()) {
+        if (txtValor.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar");
         } else {
             definirAtributos();
-             vrep.salvar(v);
+            vrep.salvar(v);
         }
 
         JOptionPane.showMessageDialog(rootPane, "Usuário cadastrado com sucesso!");
-        
+
         refresh();
     }//GEN-LAST:event_btnVenderActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (tblVendas.getSelectedRow() >= 0) {
+            if (JOptionPane.showConfirmDialog(rootPane, "Você tem certeza?", "Excluir", JOptionPane.YES_NO_OPTION) == 0) {
+                Venda venda = new Venda();
+                venda.setId((int) tblVendas.getValueAt(tblVendas.getSelectedRow(), 0));
+                vrep.excluir(venda);
+
+                JOptionPane.showMessageDialog(rootPane, "Venda excluída com sucesso!");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Informe a venda que deseja excluir!");
+        }
+        refresh();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

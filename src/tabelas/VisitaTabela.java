@@ -12,11 +12,9 @@ import repository.VisitaRep;
 public class VisitaTabela extends AbstractTableModel {
 
     private VisitaRep vrep = new VisitaRep();
-    private FuncionarioRep frep = new FuncionarioRep();
-    private ClienteRep crep = new ClienteRep();
     private List<Visita> visitas = vrep.listar();
-    private List<Funcionario> funcionarios = frep.listar();
-    private List<Cliente> clientes = crep.listar();
+    private List<Funcionario> funcionarios = vrep.listarFuncionario();
+    private List<Cliente> clientes = vrep.listarCliente();
 
     @Override
     public int getRowCount() {

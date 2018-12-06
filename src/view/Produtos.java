@@ -26,34 +26,35 @@ public class Produtos extends javax.swing.JFrame {
     Produto p = new Produto();
     ProdutoRep prep = new ProdutoRep();
     FornecedorRep frep = new FornecedorRep();
-    ProdutoTabela pt = new ProdutoTabela();      
+    ProdutoTabela pt = new ProdutoTabela();
     List<Fornecedor> fornecedores = frep.listar();
-    
+
     public Produtos() {
         initComponents();
         this.setLocationRelativeTo(null);
         refresh();
     }
-    
-    public void definirAtributos(){
+
+    public void definirAtributos() {
         p.setNomeProduto(txtNome.getText());
         p.setQtdeEstoque(Integer.parseInt(txtEstoque.getText()));
         p.setPrecoCusto(Double.parseDouble(txtCusto.getText()));
         p.setPrecoVenda(Double.parseDouble(txtVenda.getText()));
         p.setFornecedor(fornecedores.get(cmbFornecedores.getSelectedIndex()));
     }
-    
-    public void filtrar(String query){
-       TableRowSorter<ProdutoTabela> tr = new TableRowSorter<ProdutoTabela>(pt);
-       tblProdutos.setRowSorter(tr);
-       tr.setRowFilter(RowFilter.regexFilter(query));
-    
+
+    public void filtrar(String query) {
+        TableRowSorter<ProdutoTabela> tr = new TableRowSorter<ProdutoTabela>(pt);
+        tblProdutos.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(query));
+
     }
-    
-    public void refresh(){
+
+    public void refresh() {
         ProdutoTabela fi = new ProdutoTabela();
         tblProdutos.setModel(fi);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,6 +134,11 @@ public class Produtos extends javax.swing.JFrame {
         }
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -265,7 +271,7 @@ public class Produtos extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        Menu m= new Menu();
+        Menu m = new Menu();
         m.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -274,8 +280,7 @@ public class Produtos extends javax.swing.JFrame {
         if (txtNome.getText().isEmpty()
                 || txtCusto.getText().isEmpty()
                 || txtVenda.getText().isEmpty()
-                || txtEstoque.getText().isEmpty())
-           {
+                || txtEstoque.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar");
 
@@ -303,8 +308,37 @@ public class Produtos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPesquisaMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        
+        if (tblProdutos.getSelectedRow() >= 0) {
+            if (JOptionPane.showConfirmDialog(rootPane, "Você tem certeza?", "Excluir", JOptionPane.YES_NO_OPTION) == 0) {
+
+                Produto p = pt.get(tblProdutos.getSelectedRow());
+                prep.excluir(p);
+
+                JOptionPane.showMessageDialog(rootPane, "Produto excluído com sucesso!");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Informe o produto que deseja excluir!");
+        }
+        refresh();
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        if (tblProdutos.getSelectedRow() >= 0) {
+            p = pt.get(tblProdutos.getSelectedRow());
+            p.setIdProduto((int) pt.getValueAt(tblProdutos.getSelectedRow(), 0));
+            definirAtributos();
+            prep.alterar(p);
+            JOptionPane.showMessageDialog(rootPane, "Produto alterado com sucesso!");
+            txtNome.setText("");
+            txtEstoque.setText("");
+            txtVenda.setText("");
+            txtCusto.setText("");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um produto para alterar!");
+        }
+        refresh();
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**
      * @param args the command line arguments

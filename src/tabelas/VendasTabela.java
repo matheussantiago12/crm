@@ -5,8 +5,6 @@ import javax.swing.table.AbstractTableModel;
 import model.Cliente;
 import model.Produto;
 import model.Venda;
-import repository.ClienteRep;
-import repository.ProdutoRep;
 import repository.VendaRep;
 
 public class VendasTabela extends AbstractTableModel {
@@ -23,7 +21,7 @@ public class VendasTabela extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     public Produto get(int row) {
@@ -34,10 +32,12 @@ public class VendasTabela extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return produtos.get(rowIndex).getNomeProduto();
+                return vendas.get(rowIndex).getId();
             case 1:
-                return clientes.get(rowIndex).getCpfCliente();    
+                return produtos.get(rowIndex).getNomeProduto();
             case 2:
+                return clientes.get(rowIndex).getCpfCliente();    
+            case 3:
                 return vendas.get(rowIndex).getValorVenda();
         }
         return null;
@@ -47,10 +47,12 @@ public class VendasTabela extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Produto";
+                return "Id";
             case 1:
-                return "Cliente";    
+                return "Produto";
             case 2:
+                return "Cliente";    
+            case 3:
                 return "Valor total";
         }
         return null;
