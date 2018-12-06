@@ -7,6 +7,9 @@
     <class>model.Funcionario</class>
     <class>model.Pessoa</class>
     <class>model.Produto</class>
+    <class>model.Atendimento</class>
+    <class>model.Venda</class>
+    <class>model.Visita</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/crm?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
