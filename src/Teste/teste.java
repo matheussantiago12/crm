@@ -5,6 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.xml.validation.Schema;
 
+//testando
+
 public class teste {   
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProjetoPU");  
