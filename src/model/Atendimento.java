@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Basic;
@@ -10,13 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "atendimentos")
-public class Atendimento {
+@NamedQueries({
+    @NamedQuery(name = "Atendimento.findAll", query = "SELECT a FROM Atendimento a")})
+public class Atendimento implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
