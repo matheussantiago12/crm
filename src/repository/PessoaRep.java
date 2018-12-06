@@ -23,27 +23,18 @@ public class PessoaRep {
     private Connection connection = ConexaoBD.conectarBanco();
     private PreparedStatement pstm;
 
-    public int salvar(Pessoa pessoa) {
-        int last_inserted_id = 0;
-
+    public void salvar(Pessoa pessoa) {
         try {
-            pstm = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            pstm = connection.prepareStatement(INSERT);
             pstm.setString(1, pessoa.getNomePessoa());
             pstm.setString(2, pessoa.getEmailPessoa());
             pstm.setString(3, pessoa.getTelPessoa());
-            pstm.executeUpdate();
-
-            ResultSet rs = pstm.getGeneratedKeys();
-            if (rs.next()) {
-                last_inserted_id = rs.getob
-            }
-
+            pstm.execute();
             pstm.close();
 
         } catch (SQLException ex) {
             System.out.println("Ocorreu um erro ao tentar salvar: " + ex.getMessage());
         }
-        return last_inserted_id;
     }
 
     public void alterar(Pessoa pessoa) {

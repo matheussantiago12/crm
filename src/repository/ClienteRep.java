@@ -15,7 +15,7 @@ import util.ConexaoBD;
 
 public class ClienteRep {
 
-    private static final String INSERT = "insert into cliente (cpf_cliente) values (?);";
+    private static final String INSERT = "insert into cliente (cpf_cliente, id_pessoa) values (?, ?);";
 
     private static final String SELECT = "select id_cliente, cpf_cliente from cliente";
 
@@ -29,18 +29,24 @@ public class ClienteRep {
     EntityManagerFactory tx = Persistence.createEntityManagerFactory("crmPU");
     EntityManager em = tx.createEntityManager();
 
-    public void salvar(Pessoa pessoa, Cliente cliente) {
-        cliente.setPessoa(pessoa);    
-        try{
-            em.getTransaction().begin();
-            em.persist(cliente);
-            em.getTransaction().commit();
-        } catch(Exception ex){
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
+    public void salvar(Cliente cliente) {
+        try {
+            if (cliente.getId() != null) {
+                pstm = connection.prepareStatement(UPDATE);
+                pstm.setString(1, cliente.getCpfCliente());
+                pstm.setInt(2, cliente.getPessoa().getIdPessoa());
+                pstm.setInt(3, cliente.getId());
 
+            } else {
+                pstm = connection.prepareStatement(INSERT);
+                pstm.setString(1, cliente.getCpfCliente());
+                pstm.setInt(2, cliente.getPessoa().getIdPessoa());
+            }
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro ao tentar salvar: " + ex.getMessage());
+        }
     }
 
     public void excluir(Cliente cliente) {
