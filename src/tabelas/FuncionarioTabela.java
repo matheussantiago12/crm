@@ -3,11 +3,15 @@ package tabelas;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import model.Funcionario;
+import model.Pessoa;
 import repository.FuncionarioRep;
+import repository.PessoaRep;
 public class FuncionarioTabela extends AbstractTableModel {
 
     private FuncionarioRep frep = new FuncionarioRep();
+    private PessoaRep prep = new PessoaRep();
     private List<Funcionario> funcionarios = frep.listar();
+    private List<Pessoa> pessoas = prep.listar();
     
     @Override
     public int getRowCount() {
@@ -28,17 +32,17 @@ public class FuncionarioTabela extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex) {
             case 0: 
-                return funcionarios.get(rowIndex).getId();
+                return funcionarios.get(rowIndex).getIdFuncionario();
             case 1: 
                 return funcionarios.get(rowIndex).getLoginFuncionario();
             case 2: 
                 return funcionarios.get(rowIndex).getSenhaFuncionario();   
             case 3:
-                return funcionarios.get(rowIndex).getNomeFuncionario(); 
+                return pessoas.get(rowIndex).getNomePessoa(); 
             case 4:
-                return funcionarios.get(rowIndex).getEmailFuncionario(); 
+                return pessoas.get(rowIndex).getEmailPessoa(); 
             case 5:
-                return funcionarios.get(rowIndex).getTelFuncionario();     
+                return pessoas.get(rowIndex).getTelPessoa();     
         }
         return null;
     }
