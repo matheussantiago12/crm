@@ -7,6 +7,7 @@ import javax.swing.table.TableRowSorter;
 import model.Cliente;
 import model.Pessoa;
 import repository.ClienteRep;
+import repository.PessoaRep;
 import tabelas.ClienteTabela;
 
 public class ClienteNovo extends javax.swing.JFrame {
@@ -220,21 +221,31 @@ public class ClienteNovo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+      Pessoa p = new Pessoa();
+        Cliente c = new Cliente();
+        ClienteRep frep = new ClienteRep();
+        PessoaRep prep = new PessoaRep();
+
         if (txtNome.getText().isEmpty()
-                || txtEmail.getText().isEmpty()
-                || txtTelefone.getText().isEmpty()
-                || txtCpf.getText().isEmpty()) {
-
+            || txtEmail.getText().isEmpty()
+            || txtCpf.getText().isEmpty()
+            || txtNome.getText().isEmpty()
+            || txtTelefone.getText().isEmpty()){
+ 
             JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar");
-
+              
         } else {
-            definirAtributos();
-            crep.salvar(p,c);
+        p.setNomePessoa(txtNome.getText());
+        p.setEmailPessoa(txtEmail.getText());
+        p.setTelPessoa(txtTelefone.getText());
+        c.setCpfCliente(txtCpf.getText());
 
-            JOptionPane.showMessageDialog(rootPane, "Cliente cadastrado com sucesso!");
-        }
-        refresh();
+        int idPessoa = prep.salvar(p);
+        c.setPessoa(idPessoa);
 
+        frep.salvar(c);
+
+        JOptionPane.showMessageDialog(rootPane, "Usuário cadastrado com sucesso!");
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
