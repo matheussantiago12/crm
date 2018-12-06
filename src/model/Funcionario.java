@@ -6,22 +6,25 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  *
- * @author Aluno
+ * @author lucas
  */
 @Entity
-@Table(name = "Funcionario")
+@Table(name = "funcionario")
 @NamedQueries({
     @NamedQuery(name = "Funcionario.findAll", query = "SELECT f FROM Funcionario f")})
 public class Funcionario implements Serializable {
@@ -29,14 +32,12 @@ public class Funcionario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "id_funcionario")
-    private int id;
-    @Column (name = "nome_funcionario")
-    private String nomeFuncionario;
-    @Column(name = "email_funcionario")
-    private String emailFuncionario;
-    @Column(name = "tel_funcionario")
-    private String telFuncionario;
+    private Integer idFuncionario;
+    @OneToOne
+    @JoinColumn(name = "id_Pessoa")
+    private Pessoa pessoa;
     @Column(name = "login_funcionario")
     private String loginFuncionario;
     @Column(name = "senha_funcionario")
@@ -45,12 +46,24 @@ public class Funcionario implements Serializable {
     public Funcionario() {
     }
 
-    public int getId() {
-        return id;
+    public Funcionario(Integer idFuncionario) {
+        this.idFuncionario = idFuncionario;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Integer getIdFuncionario() {
+        return idFuncionario;
+    }
+
+    public void setIdFuncionario(Integer idFuncionario) {
+        this.idFuncionario = idFuncionario;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
     public String getLoginFuncionario() {
@@ -69,38 +82,10 @@ public class Funcionario implements Serializable {
         this.senhaFuncionario = senhaFuncionario;
     }
 
-    public String getNomeFuncionario() {
-        return nomeFuncionario;
-    }
-
-    public void setNomeFuncionario(String nomeFuncionario) {
-        this.nomeFuncionario = nomeFuncionario;
-    }
-
-    public String getEmailFuncionario() {
-        return emailFuncionario;
-    }
-
-    public void setEmailFuncionario(String emailFuncionario) {
-        this.emailFuncionario = emailFuncionario;
-    }
-
-    public String getTelFuncionario() {
-        return telFuncionario;
-    }
-
-    public void setTelFuncionario(String telFuncionario) {
-        this.telFuncionario = telFuncionario;
-    }
-
-    
-    
-
-
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 23 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.idFuncionario);
         return hash;
     }
 
@@ -116,7 +101,7 @@ public class Funcionario implements Serializable {
             return false;
         }
         final Funcionario other = (Funcionario) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.idFuncionario, other.idFuncionario)) {
             return false;
         }
         return true;
@@ -124,6 +109,7 @@ public class Funcionario implements Serializable {
 
     @Override
     public String toString() {
-        return "Funcionario{" + "id=" + id + ", loginFuncionario=" + loginFuncionario + ", senhaFuncionario=" + senhaFuncionario + '}';
+        return "util.Funcionario[ idFuncionario=" + idFuncionario + " ]";
     }
+    
 }

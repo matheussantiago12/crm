@@ -1,5 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package model;
-
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -12,31 +16,50 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+/**
+ *
+ * @author lucas
+ */
 @Entity
-@Table(name = "Fornecedor")
+@Table(name = "fornecedor")
 @NamedQueries({
     @NamedQuery(name = "Fornecedor.findAll", query = "SELECT f FROM Fornecedor f")})
 public class Fornecedor implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "id_fornecedor")
-    private int IdFornecedor;
+    private Integer idFornecedor;
+    @Column(name = "id_pessoa")
+    private Integer idPessoa;
     @Column(name = "cnpj_fornecedor")
     private String cnpjFornecedor;
-    @Column(name = "nome_fornecedor")
-    private String nomeFornecedor;
-    @Column(name = "email_fornecedor")
-    private String emailFornecedor;
-    @Column(name = "tel_fornecedor")
-    private String telFornecedor;
+    @Column(name = "nome_contato")
+    private String nomeContato;
 
-    public int getIdFornecedor() {
-        return IdFornecedor;
+    public Fornecedor() {
     }
 
-    public void setIdFornecedor(int IdFornecedor) {
-        this.IdFornecedor = IdFornecedor;
+    public Fornecedor(Integer idFornecedor) {
+        this.idFornecedor = idFornecedor;
+    }
+
+    public Integer getIdFornecedor() {
+        return idFornecedor;
+    }
+
+    public void setIdFornecedor(Integer idFornecedor) {
+        this.idFornecedor = idFornecedor;
+    }
+
+    public Integer getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(Integer idPessoa) {
+        this.idPessoa = idPessoa;
     }
 
     public String getCnpjFornecedor() {
@@ -47,27 +70,37 @@ public class Fornecedor implements Serializable {
         this.cnpjFornecedor = cnpjFornecedor;
     }
 
-    public String getNomeFornecedor() {
-        return nomeFornecedor;
+    public String getNomeContato() {
+        return nomeContato;
     }
 
-    public void setNomeFornecedor(String nomeFornecedor) {
-        this.nomeFornecedor = nomeFornecedor;
+    public void setNomeContato(String nomeContato) {
+        this.nomeContato = nomeContato;
     }
 
-    public String getEmailFornecedor() {
-        return emailFornecedor;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idFornecedor != null ? idFornecedor.hashCode() : 0);
+        return hash;
     }
 
-    public void setEmailFornecedor(String emailFornecedor) {
-        this.emailFornecedor = emailFornecedor;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Fornecedor)) {
+            return false;
+        }
+        Fornecedor other = (Fornecedor) object;
+        if ((this.idFornecedor == null && other.idFornecedor != null) || (this.idFornecedor != null && !this.idFornecedor.equals(other.idFornecedor))) {
+            return false;
+        }
+        return true;
     }
 
-    public String getTelFornecedor() {
-        return telFornecedor;
+    @Override
+    public String toString() {
+        return "util.Fornecedor[ idFornecedor=" + idFornecedor + " ]";
     }
-
-    public void setTelFornecedor(String telFornecedor) {
-        this.telFornecedor = telFornecedor;
-    }
+    
 }

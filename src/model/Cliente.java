@@ -5,53 +5,55 @@
  */
 package model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
 /**
  *
- * @author Aluno
+ * @author lucas
  */
 @Entity
 @Table(name = "cliente")
 @NamedQueries({
-@NamedQuery(name = "Cliente.findAll", query = "SELECT cl FROM Cliente cl")})
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
 
-    @Transient
-    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_cliente")
-    private int idCliente;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "cpf_cliente")
     private String cpfCliente;
-    @Column (name = "nome_cliente")
-    private String nomeCliente;
-    @Column(name = "email_cliente")
-    private String emailCliente;
-    @Column(name = "tel_cliente")
-    private String telCliente;
+    @OneToOne
+    @JoinColumn(name = "id_Pessoa")
+    private Pessoa pessoa;
 
-    public int getIdCliente() {
-        return idCliente;
+    public Cliente() {
     }
 
-    public void setIdCliente(int idCliente) {
-        int oldIdCliente = this.idCliente;
-        this.idCliente = idCliente;
-        changeSupport.firePropertyChange("idCliente", oldIdCliente, idCliente);
+    public Cliente(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCpfCliente() {
@@ -59,53 +61,44 @@ public class Cliente implements Serializable {
     }
 
     public void setCpfCliente(String cpfCliente) {
-        String oldCpfCliente = this.cpfCliente;
         this.cpfCliente = cpfCliente;
-        changeSupport.firePropertyChange("cpfCliente", oldCpfCliente, cpfCliente);
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        String oldNomeCliente = this.nomeCliente;
-        this.nomeCliente = nomeCliente;
-        changeSupport.firePropertyChange("nomeCliente", oldNomeCliente, nomeCliente);
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
-    public String getEmailCliente() {
-        return emailCliente;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
-    public void setEmailCliente(String emailCliente) {
-        String oldEmailCliente = this.emailCliente;
-        this.emailCliente = emailCliente;
-        changeSupport.firePropertyChange("emailCliente", oldEmailCliente, emailCliente);
-    }
-
-    public String getTelCliente() {
-        return telCliente;
-    }
-
-    public void setTelCliente(String telCliente) {
-        String oldTelCliente = this.telCliente;
-        this.telCliente = telCliente;
-        changeSupport.firePropertyChange("telCliente", oldTelCliente, telCliente);
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cliente other = (Cliente) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return nomeCliente;
+        return "Cliente{" + "id=" + id + ", cpfCliente=" + cpfCliente + ", pessoa=" + pessoa + '}';
     }
-    
-    
 }

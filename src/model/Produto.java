@@ -16,9 +16,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
+/**
+ *
+ * @author lucas
+ */
 @Entity
-@Table(name = "Produto")
+@Table(name = "produto")
 @NamedQueries({
     @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p")})
 public class Produto implements Serializable {
@@ -29,21 +32,24 @@ public class Produto implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_produto")
     private Integer idProduto;
-    @Basic(optional = false)
     @Column(name = "id_fornecedor")
-    private int idFornecedor;
-    @Basic(optional = false)
+    private Integer idFornecedor;
     @Column(name = "nome_produto")
     private String nomeProduto;
-    @Basic(optional = false)
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "preco_custo")
-    private double precoCusto;
-     @Basic(optional = false)
+    private Double precoCusto;
     @Column(name = "preco_venda")
-    private double precoVenda;
-     @Basic(optional = false)
+    private Double precoVenda;
     @Column(name = "qtde_estoque")
-    private int qtdeEstoque;
+    private Integer qtdeEstoque;
+
+    public Produto() {
+    }
+
+    public Produto(Integer idProduto) {
+        this.idProduto = idProduto;
+    }
 
     public Integer getIdProduto() {
         return idProduto;
@@ -53,11 +59,11 @@ public class Produto implements Serializable {
         this.idProduto = idProduto;
     }
 
-    public int getIdFornecedor() {
+    public Integer getIdFornecedor() {
         return idFornecedor;
     }
 
-    public void setIdFornecedor(int idFornecedor) {
+    public void setIdFornecedor(Integer idFornecedor) {
         this.idFornecedor = idFornecedor;
     }
 
@@ -69,29 +75,53 @@ public class Produto implements Serializable {
         this.nomeProduto = nomeProduto;
     }
 
-    public double getPrecoCusto() {
+    public Double getPrecoCusto() {
         return precoCusto;
     }
 
-    public void setPrecoCusto(double precoCusto) {
+    public void setPrecoCusto(Double precoCusto) {
         this.precoCusto = precoCusto;
     }
 
-    public double getPrecoVenda() {
+    public Double getPrecoVenda() {
         return precoVenda;
     }
 
-    public void setPrecoVenda(double precoVenda) {
+    public void setPrecoVenda(Double precoVenda) {
         this.precoVenda = precoVenda;
     }
 
-    public int getQtdeEstoque() {
+    public Integer getQtdeEstoque() {
         return qtdeEstoque;
     }
 
-    public void setQtdeEstoque(int qtdeEstoque) {
+    public void setQtdeEstoque(Integer qtdeEstoque) {
         this.qtdeEstoque = qtdeEstoque;
     }
-     
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idProduto != null ? idProduto.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Produto)) {
+            return false;
+        }
+        Produto other = (Produto) object;
+        if ((this.idProduto == null && other.idProduto != null) || (this.idProduto != null && !this.idProduto.equals(other.idProduto))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "util.Produto[ idProduto=" + idProduto + " ]";
+    }
     
 }
