@@ -35,8 +35,10 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Column(name = "cpf_cliente")
     private String cpfCliente;
+    
     @OneToOne
     @JoinColumn(name = "id_Pessoa")
     private Pessoa pessoa;

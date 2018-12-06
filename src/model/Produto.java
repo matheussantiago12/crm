@@ -6,14 +6,18 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,8 +36,9 @@ public class Produto implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_produto")
     private Integer idProduto;
-    @Column(name = "id_fornecedor")
-    private Integer idFornecedor;
+    @ManyToOne
+    @JoinColumn(name = "id_fornecedor")
+    private Fornecedor fornecedor;
     @Column(name = "nome_produto")
     private String nomeProduto;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -59,14 +64,14 @@ public class Produto implements Serializable {
         this.idProduto = idProduto;
     }
 
-    public Integer getIdFornecedor() {
-        return idFornecedor;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public void setIdFornecedor(Integer idFornecedor) {
-        this.idFornecedor = idFornecedor;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
-
+    
     public String getNomeProduto() {
         return nomeProduto;
     }
@@ -101,19 +106,24 @@ public class Produto implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idProduto != null ? idProduto.hashCode() : 0);
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.idProduto);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Produto)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Produto other = (Produto) object;
-        if ((this.idProduto == null && other.idProduto != null) || (this.idProduto != null && !this.idProduto.equals(other.idProduto))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Produto other = (Produto) obj;
+        if (!Objects.equals(this.idProduto, other.idProduto)) {
             return false;
         }
         return true;

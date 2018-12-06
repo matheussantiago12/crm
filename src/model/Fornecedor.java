@@ -6,14 +6,17 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -32,8 +35,9 @@ public class Fornecedor implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_fornecedor")
     private Integer idFornecedor;
-    @Column(name = "id_pessoa")
-    private Integer idPessoa;
+    @OneToOne
+    @JoinColumn(name = "id_pessoa")
+    private Pessoa pessoa;
     @Column(name = "cnpj_fornecedor")
     private String cnpjFornecedor;
     @Column(name = "nome_contato")
@@ -54,14 +58,14 @@ public class Fornecedor implements Serializable {
         this.idFornecedor = idFornecedor;
     }
 
-    public Integer getIdPessoa() {
-        return idPessoa;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setIdPessoa(Integer idPessoa) {
-        this.idPessoa = idPessoa;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
-
+    
     public String getCnpjFornecedor() {
         return cnpjFornecedor;
     }
@@ -80,19 +84,24 @@ public class Fornecedor implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idFornecedor != null ? idFornecedor.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.idFornecedor);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Fornecedor)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Fornecedor other = (Fornecedor) object;
-        if ((this.idFornecedor == null && other.idFornecedor != null) || (this.idFornecedor != null && !this.idFornecedor.equals(other.idFornecedor))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Fornecedor other = (Fornecedor) obj;
+        if (!Objects.equals(this.idFornecedor, other.idFornecedor)) {
             return false;
         }
         return true;
