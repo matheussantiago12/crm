@@ -129,13 +129,11 @@
                           <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtData" alignment="0" max="32767" attributes="0"/>
-                              <Component id="cmbFuncionario" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jButton1" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="cmbCliente" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="cmbFuncionario" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButton1" alignment="0" pref="77" max="32767" attributes="0"/>
+                          <Component id="txtData" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cmbCliente" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -162,8 +160,8 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtData" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtData" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -206,11 +204,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtData">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="dd/mm/aaaa"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="cmbFuncionario">
       <BindingProperties>
@@ -259,5 +252,12 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JFormattedTextField" name="txtData">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+          <Format format="##/##/####" subtype="-1" type="5"/>
+        </Property>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

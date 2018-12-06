@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
+import jdk.nashorn.internal.runtime.regexp.joni.EncodingHelper;
 import model.Fornecedor;
 import model.Pessoa;
 import repository.FornecedorRep;
@@ -33,7 +34,10 @@ public class Fornecedores extends javax.swing.JFrame {
     public void definirAtributos() {
         f.setCnpjFornecedor(txtCNPJ.getText());
         f.setNomeContato(txtNomeEmpresa.getText());
-        f.setPessoa(pessoas.get(cmbPessoas.getSelectedIndex()));
+        Pessoa pessoa = (Pessoa) cmbPessoas.getSelectedItem();
+        f.setPessoa(pessoa);
+        System.out.println(pessoa.getIdPessoa());
+        //f.setPessoa(pessoas.get(cmbPessoas.getSelectedIndex()));
     }
     
     public void filtrar(String query){

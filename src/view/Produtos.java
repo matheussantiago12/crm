@@ -35,7 +35,6 @@ public class Produtos extends javax.swing.JFrame {
         p.setQtdeEstoque(Integer.parseInt(txtEstoque.getText()));
         p.setPrecoCusto(Double.parseDouble(txtCusto.getText()));
         p.setPrecoVenda(Double.parseDouble(txtVenda.getText()));
-        p.setIdFornecedor(Integer.parseInt(txtFornecedor.getText()));
     }
     
     public void filtrar(String query){
