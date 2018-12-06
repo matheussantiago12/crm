@@ -59,7 +59,7 @@ public class ClienteRep {
     public void excluir(Cliente cliente) {
         try {
             pstm = connection.prepareStatement(DELETE);
-            //pstm.setInt(1, cliente.getIdCliente());
+            pstm.setInt(1, cliente.getId());
             pstm.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Ocorreu um erro ao tentar excluir: " + ex.getMessage());

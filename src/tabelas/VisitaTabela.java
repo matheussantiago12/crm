@@ -2,13 +2,21 @@ package tabelas;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import model.Cliente;
+import model.Funcionario;
 import model.Visita;
+import repository.ClienteRep;
+import repository.FuncionarioRep;
 import repository.VisitaRep;
 
 public class VisitaTabela extends AbstractTableModel {
 
     private VisitaRep vrep = new VisitaRep();
+    private FuncionarioRep frep = new FuncionarioRep();
+    private ClienteRep crep = new ClienteRep();
     private List<Visita> visitas = vrep.listar();
+    private List<Funcionario> funcionarios = frep.listar();
+    private List<Cliente> clientes = crep.listar();
 
     @Override
     public int getRowCount() {
@@ -17,7 +25,7 @@ public class VisitaTabela extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 4;
     }
 
     public Visita get(int row) {
@@ -30,13 +38,11 @@ public class VisitaTabela extends AbstractTableModel {
             case 0:
                 return visitas.get(rowIndex).getId();
             case 1:
-                return visitas.get(rowIndex).getFuncionario().getIdFuncionario();
+                return funcionarios.get(rowIndex).getLoginFuncionario();
             case 2:
-                return visitas.get(rowIndex).getCliente().getId();
+                return clientes.get(rowIndex).getCpfCliente();
             case 3:
                 return visitas.get(rowIndex).getDataVisita();
-            case 4:
-                return visitas.get(rowIndex).getDetalhes();
         }
         return null;
     }
@@ -52,8 +58,6 @@ public class VisitaTabela extends AbstractTableModel {
                 return "Cliente";
             case 3:
                 return "Data";
-            case 4:
-                return "Detalhes";
         }
         return null;
     }

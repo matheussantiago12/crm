@@ -38,15 +38,9 @@ public class Venda implements Serializable{
     @JoinColumn(name = "id_produto")
     private Produto produto;
     
-    @Column(name = "data_venda")
-    @Temporal(TemporalType.DATE)
-    private Date dataVenda;
-    
     @Column(name = "valor_venda")
     private double valorVenda;
     
-    @Column(name = "qtd_vendida")
-    private Integer qtdVendida;
 
     public Integer getId() {
         return id;
@@ -72,28 +66,12 @@ public class Venda implements Serializable{
         this.produto = produto;
     }
 
-    public Date getDataVenda() {
-        return dataVenda;
-    }
-
-    public void setDataVenda(Date dataVenda) {
-        this.dataVenda = dataVenda;
-    }
-
     public double getValorVenda() {
         return valorVenda;
     }
 
     public void setValorVenda(double valorVenda) {
         this.valorVenda = valorVenda;
-    }
-
-    public Integer getQtdVendida() {
-        return qtdVendida;
-    }
-
-    public void setQtdVendida(Integer qtdVendida) {
-        this.qtdVendida = qtdVendida;
     }
 
     @Override
@@ -123,6 +101,8 @@ public class Venda implements Serializable{
 
     @Override
     public String toString() {
-        return "Venda{" + "id=" + id + ", cliente=" + cliente + ", produto=" + produto + ", dataVenda=" + dataVenda + ", valorVenda=" + valorVenda + ", qtdVendida=" + qtdVendida + '}';
+        return id + " - " + valorVenda;
     }
+
+    
 }

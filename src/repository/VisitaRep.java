@@ -7,14 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import model.Cliente;
+import model.Funcionario;
 import model.Visita;
 import util.ConexaoBD;
 
 public class VisitaRep {
 
-    private static final String INSERT = "insert into visita (data_visita, id_funcionario, id_cliente, detalhes) values (?,?,?,?);";
+    private static final String INSERT = "insert into visita (data_visita, id_funcionario, id_cliente) values (?,?,?,?);";
 
-    private static final String SELECT = "select id_visita, data_visita, concluido_visita, id_funcionario, id_cliente";
+    private static final String SELECT = "select id_visita, data_visita, id_funcionario, id_cliente from visita";
+
+    private static final String SELECT_FUNCIONARIO = "select id_funcionario, login_funcionario from funcionario inner join visita on funcionario.id_funcionario = visita.id_funcionario order by visita.id_visita";
+
+    private static final String SELECT_CLIENTE = "select id, cpf_cliente from cliente inner join visista on cliente.id = visita.id_cliente order by visita.id_visita";
 
     private static final String DELETE = "delete from visita where id_visita = ?";
 
@@ -30,7 +36,6 @@ public class VisitaRep {
             pstm.setString(1, visita.getDataVisita());
             pstm.setInt(2, visita.getFuncionario().getIdFuncionario());
             pstm.setInt(3, visita.getCliente().getId());
-            pstm.setString(4, visita.getDetalhes());
             pstm.execute();
             pstm.close();
         } catch (SQLException ex) {
@@ -81,5 +86,47 @@ public class VisitaRep {
             System.out.println("Ocorreu um erro ao tentar buscar as visitas do banco: " + ex.getMessage());
         }
         return visita;
+    }
+    
+    public List<Cliente> listarCliente() {
+        List<Cliente> clientes = new ArrayList<>();
+        ResultSet res;
+
+        try {
+            pstm = connection.prepareStatement(SELECT_CLIENTE);
+            res = pstm.executeQuery();
+
+            if (res.next()) {
+                Cliente c = new Cliente();
+                c.setId(res.getInt("id"));
+                c.setCpfCliente(res.getString("cpf_cliente"));
+                clientes.add(c);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro ao tentar buscar as visitas do banco: " + ex.getMessage());
+        }
+        return clientes;
+    }
+    
+    public List<Funcionario> listarFuncionario() {
+        List<Funcionario> funcionarios = new ArrayList<>();
+        ResultSet res;
+
+        try {
+            pstm = connection.prepareStatement(SELECT_FUNCIONARIO);
+            res = pstm.executeQuery();
+
+            if (res.next()) {
+                Funcionario f = new Funcionario();
+                f.setIdFuncionario(res.getInt("id_funcionario"));
+                f.setLoginFuncionario(res.getString("login_funcionario"));
+                funcionarios.add(f);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro ao tentar buscar as visitas do banco: " + ex.getMessage());
+        }
+        return funcionarios;
     }
 }

@@ -39,9 +39,6 @@ public class Visita implements Serializable{
     
     @Column(name = "data_visita")
     private String dataVisita;
-    
-    @Column(name = "detalhes")
-    private String detalhes;
 
     public Integer getId() {
         return id;
@@ -73,14 +70,6 @@ public class Visita implements Serializable{
 
     public void setDataVisita(String dataVisita) {
         this.dataVisita = dataVisita;
-    }
-    
-    public String getDetalhes() {
-        return detalhes;
-    }
-
-    public void setDetalhes(String detalhes) {
-        this.detalhes = detalhes;
     }
 
     @Override

@@ -135,6 +135,11 @@ public class Produtos extends javax.swing.JFrame {
         btnAlterar.setText("Alterar");
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -296,6 +301,10 @@ public class Produtos extends javax.swing.JFrame {
         txtPesquisa.setText("");
         txtPesquisa.setForeground(Color.black);
     }//GEN-LAST:event_txtPesquisaMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
