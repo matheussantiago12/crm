@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
@@ -18,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -28,6 +31,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Fornecedor.findAll", query = "SELECT f FROM Fornecedor f")})
 public class Fornecedor implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,7 +61,9 @@ public class Fornecedor implements Serializable {
     }
 
     public void setIdFornecedor(Integer idFornecedor) {
+        Integer oldIdFornecedor = this.idFornecedor;
         this.idFornecedor = idFornecedor;
+        changeSupport.firePropertyChange("idFornecedor", oldIdFornecedor, idFornecedor);
     }
 
     public Pessoa getPessoa() {
@@ -71,7 +79,9 @@ public class Fornecedor implements Serializable {
     }
 
     public void setCnpjFornecedor(String cnpjFornecedor) {
+        String oldCnpjFornecedor = this.cnpjFornecedor;
         this.cnpjFornecedor = cnpjFornecedor;
+        changeSupport.firePropertyChange("cnpjFornecedor", oldCnpjFornecedor, cnpjFornecedor);
     }
 
     public String getNomeContato() {
@@ -79,7 +89,9 @@ public class Fornecedor implements Serializable {
     }
 
     public void setNomeContato(String nomeContato) {
+        String oldNomeContato = this.nomeContato;
         this.nomeContato = nomeContato;
+        changeSupport.firePropertyChange("nomeContato", oldNomeContato, nomeContato);
     }
 
     @Override
@@ -109,7 +121,15 @@ public class Fornecedor implements Serializable {
 
     @Override
     public String toString() {
-        return "util.Fornecedor[ idFornecedor=" + idFornecedor + " ]";
+        return idFornecedor + " - " + nomeContato;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

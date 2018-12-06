@@ -21,7 +21,7 @@ public class FornecedoresTabela extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     public Fornecedor get(int row) {
@@ -36,11 +36,13 @@ public class FornecedoresTabela extends AbstractTableModel {
             case 1:
                 return fornecedores.get(rowIndex).getCnpjFornecedor();
             case 2:
-                return pessoas.get(rowIndex).getNomePessoa();
+                return fornecedores.get(rowIndex).getNomeContato();
             case 3:
+                return pessoas.get(rowIndex).getNomePessoa();
+            case 4:
                 return pessoas.get(rowIndex).getEmailPessoa();
-            case 4: 
-                return pessoas.get(rowIndex).getTelPessoa();    
+            case 5:
+                return pessoas.get(rowIndex).getTelPessoa();
         }
         return null;
     }
@@ -53,11 +55,13 @@ public class FornecedoresTabela extends AbstractTableModel {
             case 1:
                 return "CNPJ";
             case 2:
-                return "Nome";
+                return "Empresa";    
             case 3:
-                return "Email";
+                return "Nome";
             case 4:
-                return "Tel";    
+                return "Email";
+            case 5:
+                return "Tel";
         }
         return null;
     }

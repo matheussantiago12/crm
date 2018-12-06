@@ -17,11 +17,11 @@ public class ClienteRep {
 
     private static final String INSERT = "insert into cliente (cpf_cliente, id_pessoa) values (?, ?);";
 
-    private static final String SELECT = "select id_cliente, cpf_cliente from cliente";
+    private static final String SELECT = "select id, cpf_cliente from cliente";
 
-    private static final String DELETE = "delete from cliente where id_cliente = ?";
+    private static final String DELETE = "delete from cliente where id = ?";
 
-    private static final String UPDATE = "update cliente set cpf_cliente = ?, id_pessoa = ? where id_cliente = ?";
+    private static final String UPDATE = "update cliente set cpf_cliente = ?, id_pessoa = ? where id = ?";
 
     private Connection connection = ConexaoBD.conectarBanco();
     private PreparedStatement pstm;
@@ -31,21 +31,26 @@ public class ClienteRep {
 
     public void salvar(Cliente cliente) {
         try {
-            if (cliente.getId() != null) {
-                pstm = connection.prepareStatement(UPDATE);
-                pstm.setString(1, cliente.getCpfCliente());
-                pstm.setInt(2, cliente.getPessoa().getIdPessoa());
-                pstm.setInt(3, cliente.getId());
-
-            } else {
-                pstm = connection.prepareStatement(INSERT);
-                pstm.setString(1, cliente.getCpfCliente());
-                pstm.setInt(2, cliente.getPessoa().getIdPessoa());
-            }
+            pstm = connection.prepareStatement(INSERT);
+            pstm.setString(1, cliente.getCpfCliente());
+            pstm.setInt(2, cliente.getPessoa().getIdPessoa());
             pstm.execute();
             pstm.close();
         } catch (SQLException ex) {
             System.out.println("Ocorreu um erro ao tentar salvar: " + ex.getMessage());
+        }
+    }
+
+    public void alterar(Cliente cliente) {
+        try {
+            pstm = connection.prepareStatement(UPDATE);
+            pstm.setString(1, cliente.getCpfCliente());
+            pstm.setInt(2, cliente.getPessoa().getIdPessoa());
+            pstm.setInt(3, cliente.getId());
+            pstm.execute();
+            pstm.close();
+        } catch (Exception e) {
+
         }
     }
 
@@ -70,7 +75,7 @@ public class ClienteRep {
 
             while (res.next()) {
                 Cliente c = new Cliente();
-                c.setId(res.getInt("id_cliente"));
+                c.setId(res.getInt("id"));
                 c.setCpfCliente(res.getString("cpf_cliente"));
                 cliente.add(c);
             }

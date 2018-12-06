@@ -38,8 +38,7 @@ public class Visita implements Serializable{
     private Funcionario funcionario;
     
     @Column(name = "data_visita")
-    @Temporal(TemporalType.DATE)
-    private Date data_visita;
+    private String dataVisita;
     
     @Column(name = "detalhes")
     private String detalhes;
@@ -68,14 +67,14 @@ public class Visita implements Serializable{
         this.funcionario = funcionario;
     }
 
-    public Date getData_visita() {
-        return data_visita;
+    public String getDataVisita() {
+        return dataVisita;
     }
 
-    public void setData_visita(Date data_visita) {
-        this.data_visita = data_visita;
+    public void setDataVisita(String dataVisita) {
+        this.dataVisita = dataVisita;
     }
-
+    
     public String getDetalhes() {
         return detalhes;
     }
@@ -111,6 +110,6 @@ public class Visita implements Serializable{
 
     @Override
     public String toString() {
-        return "Visita{" + "id=" + id + ", cliente=" + cliente + ", funcionario=" + funcionario + ", data_visita=" + data_visita + ", detalhes=" + detalhes + '}';
+        return cliente.getPessoa().getNomePessoa() + " - " + funcionario.getPessoa().getNomePessoa();
     }
 }

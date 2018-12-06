@@ -34,7 +34,7 @@ public class ProdutoTabela extends AbstractTableModel {
             case 0:
                 return produtos.get(rowIndex).getIdProduto();
             case 1:
-                return fornecedores.get(rowIndex).getIdFornecedor();    
+                return fornecedores.get(rowIndex).getNomeContato();    
             case 2:
                 return produtos.get(rowIndex).getNomeProduto();
             case 3:
@@ -53,7 +53,7 @@ public class ProdutoTabela extends AbstractTableModel {
             case 0:
                 return "Id ";
             case 1:
-                return "Id";    
+                return "Empresa";    
             case 2:
                 return "Nome";
             case 3:

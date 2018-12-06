@@ -121,7 +121,7 @@ public class Funcionario implements Serializable {
 
     @Override
     public String toString() {
-        return "util.Funcionario[ idFuncionario=" + idFuncionario + " ]";
+        return idFuncionario + " - " +  pessoa.getNomePessoa();
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

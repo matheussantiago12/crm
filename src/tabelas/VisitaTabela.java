@@ -28,15 +28,15 @@ public class VisitaTabela extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return visitas.get(rowIndex).getIdVisita();
+                return visitas.get(rowIndex).getId();
             case 1:
-                return visitas.get(rowIndex).getDataVisita();
+                return visitas.get(rowIndex).getFuncionario().getIdFuncionario();
             case 2:
-                return visitas.get(rowIndex).isConcluidoVisita();
+                return visitas.get(rowIndex).getCliente().getId();
             case 3:
-                return visitas.get(rowIndex).getIdFuncionario();
+                return visitas.get(rowIndex).getDataVisita();
             case 4:
-                return visitas.get(rowIndex).getIdCliente();
+                return visitas.get(rowIndex).getDetalhes();
         }
         return null;
     }
@@ -47,15 +47,14 @@ public class VisitaTabela extends AbstractTableModel {
             case 0:
                 return "Id";
             case 1:
-                return "Data";
+                return "Funcionario";
             case 2:
-                return "Concluída";
-            case 3:
-                return "Funcionário";
-            case 4:
                 return "Cliente";
+            case 3:
+                return "Data";
+            case 4:
+                return "Detalhes";
         }
         return null;
     }
-
 }

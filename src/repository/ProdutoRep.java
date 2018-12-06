@@ -27,7 +27,7 @@ public class ProdutoRep {
 
         try {
             pstm = connection.prepareStatement(INSERT);
-            pstm.setDouble(1, produto.getIdFornecedor());
+            pstm.setInt(1, (produto.getFornecedor().getIdFornecedor()));
             pstm.setString(2, produto.getNomeProduto());
             pstm.setInt(3, produto.getQtdeEstoque());
             pstm.setDouble(4, produto.getPrecoCusto());
@@ -39,6 +39,21 @@ public class ProdutoRep {
             System.out.println("Ocorreu um erro ao tentar salvar: " + ex.getMessage());
         }
     }
+    
+    public void alterar(Produto produto) {
+
+        try {
+            pstm = connection.prepareStatement(UPDATE);
+            pstm.setString(1, produto.getNomeProduto());
+            pstm.setInt(2, produto.getQtdeEstoque());
+            pstm.setDouble(3, produto.getPrecoCusto());
+            pstm.setDouble(4, produto.getPrecoVenda());
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro ao tentar alterar: " + ex.getMessage());
+        }
+    }
 
     public void excluir(Produto produto) {
         try {
@@ -47,6 +62,7 @@ public class ProdutoRep {
             pstm.setInt(2, produto.getQtdeEstoque());
             pstm.setDouble(3, produto.getPrecoCusto());
             pstm.setDouble(4, produto.getPrecoVenda());
+            pstm.setInt(5, produto.getIdProduto());
             pstm.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Ocorreu um erro ao tentar excluir: " + ex.getMessage());
@@ -66,7 +82,6 @@ public class ProdutoRep {
                 Produto p = new Produto();
                 Fornecedor f = new Fornecedor();
                 p.setIdProduto(res.getInt("id_produto"));
-                f.setIdFornecedor(res.getInt("id_fornecedor"));
                 p.setNomeProduto(res.getString("nome_produto"));
                 p.setQtdeEstoque(res.getInt("qtde_estoque"));
                 p.setPrecoVenda(res.getDouble("preco_venda"));

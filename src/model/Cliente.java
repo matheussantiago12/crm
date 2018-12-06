@@ -111,7 +111,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", cpfCliente=" + cpfCliente + ", pessoa=" + pessoa + '}';
+        return id + " - " + pessoa.getNomePessoa();
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

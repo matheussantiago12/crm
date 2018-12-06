@@ -5,9 +5,13 @@
  */
 package view;
 
-import combos.IdClientesCombo;
+import java.util.List;
 import javax.swing.JOptionPane;
+import model.Cliente;
+import model.Funcionario;
 import model.Visita;
+import repository.ClienteRep;
+import repository.FuncionarioRep;
 import repository.VisitaRep;
 
 /**
@@ -18,20 +22,24 @@ public class Visitas extends javax.swing.JFrame {
 
     VisitaRep vrep = new VisitaRep();
     Visita v = new Visita();
-    IdClientesCombo ic;
-    
+    ClienteRep crep = new ClienteRep();
+    FuncionarioRep frep = new FuncionarioRep();
+    List<Cliente> clientes = crep.listar();
+    List<Funcionario> funcionarios = frep.listar();
+
     public Visitas() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
-    public void definirAtributos(){     
-        
+
+    public void definirAtributos() {
+        v.setCliente(clientes.get(cmbCliente.getSelectedIndex()));
+        v.setDataVisita(txtData.getText());
+        v.setDetalhes(txtaDetalhes.getText());
+        v.setFuncionario(funcionarios.get(cmbFuncionario.getSelectedIndex()));
     }
-    
-    public void refresh(){
-        ic = new IdClientesCombo();
-        cmbCliente.setModel(ic);
+
+    public void refresh() {
     }
 
     /**
@@ -42,27 +50,35 @@ public class Visitas extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jComboBox2 = new javax.swing.JComboBox<>();
         buttonGroup1 = new javax.swing.ButtonGroup();
-        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("crm?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("crmPU").createEntityManager();
         clienteQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT c FROM Cliente c");
         clienteList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery.getResultList();
+        crmPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("crmPU").createEntityManager();
+        clienteQuery1 = java.beans.Beans.isDesignTime() ? null : crmPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery1.getResultList();
+        funcionarioQuery = java.beans.Beans.isDesignTime() ? null : crmPUEntityManager.createQuery("SELECT f FROM Funcionario f");
+        funcionarioList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : funcionarioQuery.getResultList();
+        jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         txtData = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
         cmbFuncionario = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         cmbCliente = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtaDetalhes = new javax.swing.JTextArea();
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,17 +91,10 @@ public class Visitas extends javax.swing.JFrame {
 
         jLabel4.setText("Funcionário Responsável");
 
-        jLabel6.setText("Concluída");
-
         txtData.setText("dd/mm/aaaa");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Sim");
-
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Não");
-
-        cmbFuncionario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, funcionarioList, cmbFuncionario);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +110,12 @@ public class Visitas extends javax.swing.JFrame {
             }
         });
 
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clienteList1, cmbCliente);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        txtaDetalhes.setColumns(20);
+        txtaDetalhes.setRows(5);
+        jScrollPane1.setViewportView(txtaDetalhes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,23 +130,22 @@ public class Visitas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jRadioButton1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jRadioButton2))
-                        .addComponent(txtData)
-                        .addComponent(cmbFuncionario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtData)
+                                .addComponent(cmbFuncionario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -154,34 +167,32 @@ public class Visitas extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
+                .addGap(47, 47, 47)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
-                .addGap(22, 22, 22)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         definirAtributos();
         vrep.salvar(v);
 
         JOptionPane.showMessageDialog(rootPane, "Funcionário cadastrado com sucesso!");
-        
+
         refresh();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        Menu m= new Menu();
+        Menu m = new Menu();
         m.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -224,10 +235,15 @@ public class Visitas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private java.util.List<model.Cliente> clienteList;
+    private java.util.List<model.Cliente> clienteList1;
     private javax.persistence.Query clienteQuery;
+    private javax.persistence.Query clienteQuery1;
     private javax.swing.JComboBox<String> cmbCliente;
     private javax.swing.JComboBox<String> cmbFuncionario;
+    private javax.persistence.EntityManager crmPUEntityManager;
     private javax.persistence.EntityManager entityManager;
+    private java.util.List<model.Funcionario> funcionarioList;
+    private javax.persistence.Query funcionarioQuery;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -236,9 +252,10 @@ public class Visitas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtData;
+    private javax.swing.JTextArea txtaDetalhes;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
