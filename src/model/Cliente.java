@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
@@ -18,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -28,6 +31,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,7 +61,9 @@ public class Cliente implements Serializable {
     }
 
     public void setId(Integer id) {
+        Integer oldId = this.id;
         this.id = id;
+        changeSupport.firePropertyChange("id", oldId, id);
     }
 
     public String getCpfCliente() {
@@ -63,7 +71,9 @@ public class Cliente implements Serializable {
     }
 
     public void setCpfCliente(String cpfCliente) {
+        String oldCpfCliente = this.cpfCliente;
         this.cpfCliente = cpfCliente;
+        changeSupport.firePropertyChange("cpfCliente", oldCpfCliente, cpfCliente);
     }
 
     public Pessoa getPessoa() {
@@ -102,5 +112,13 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "Cliente{" + "id=" + id + ", cpfCliente=" + cpfCliente + ", pessoa=" + pessoa + '}';
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
 }

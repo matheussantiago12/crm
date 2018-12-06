@@ -69,13 +69,10 @@ public class ClienteRep {
             res = pstm.executeQuery();
 
             while (res.next()) {
-                //Cliente c = new Cliente();
-                //c.setIdCliente(res.getInt("id_cliente"));
-                //c.setCpfCliente(res.getString("cpf_cliente"));
-                //c.setNomeCliente(res.getString("nome_cliente"));
-                //c.setEmailCliente(res.getString("email_cliente"));
-                //c.setTelCliente(res.getString("tel_cliente"));
-                //cliente.add(c);
+                Cliente c = new Cliente();
+                c.setId(res.getInt("id_cliente"));
+                c.setCpfCliente(res.getString("cpf_cliente"));
+                cliente.add(c);
             }
 
         } catch (SQLException ex) {

@@ -18,7 +18,7 @@ public class PessoaRep {
 
     private static final String DELETE = "delete from pessoa where id_pessoa = ?";
 
-    private static final String UPDATE = "update pessoa set nome_pessoa = ?,  email_pessoa = ?, tel_pessoa = ? where id_pessoa = ?";
+    private static final String UPDATE = "update pessoa set email_pessoa = ?,  nome_pessoa = ?, tel_pessoa = ? where id_pessoa = ?";
 
     private Connection connection = ConexaoBD.conectarBanco();
     private PreparedStatement pstm;

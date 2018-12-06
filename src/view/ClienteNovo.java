@@ -32,10 +32,9 @@ public class ClienteNovo extends javax.swing.JFrame {
     }
 
     public void definirAtributos() {
-//        p.setNomePessoa(txtNome.getText());
-//        p.setEmailPessoa(txtEmail.getText());
-//        p.setTelPessoa(txtTelefone.getText());
-//        c.setCpfCliente(txtCpf.getText());
+        p = pessoas.get(cmbPessoa.getSelectedIndex());
+        c.setPessoa(p);
+        c.setCpfCliente(txtCpf.getText());
     }
 
     public void filtrar(String query) {
@@ -220,9 +219,6 @@ public class ClienteNovo extends javax.swing.JFrame {
         if (txtCpf.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar");
         } else {
-            p = pessoas.get(cmbPessoa.getSelectedIndex());
-            c.setPessoa(p);
-            c.setCpfCliente(txtCpf.getText());
             crep.salvar(c);
         }
 

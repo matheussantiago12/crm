@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
@@ -19,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -29,6 +32,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Produto.findAll", query = "SELECT p FROM Produto p")})
 public class Produto implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,7 +67,9 @@ public class Produto implements Serializable {
     }
 
     public void setIdProduto(Integer idProduto) {
+        Integer oldIdProduto = this.idProduto;
         this.idProduto = idProduto;
+        changeSupport.firePropertyChange("idProduto", oldIdProduto, idProduto);
     }
 
     public Fornecedor getFornecedor() {
@@ -69,7 +77,9 @@ public class Produto implements Serializable {
     }
 
     public void setFornecedor(Fornecedor fornecedor) {
+        Fornecedor oldFornecedor = this.fornecedor;
         this.fornecedor = fornecedor;
+        changeSupport.firePropertyChange("fornecedor", oldFornecedor, fornecedor);
     }
     
     public String getNomeProduto() {
@@ -77,7 +87,9 @@ public class Produto implements Serializable {
     }
 
     public void setNomeProduto(String nomeProduto) {
+        String oldNomeProduto = this.nomeProduto;
         this.nomeProduto = nomeProduto;
+        changeSupport.firePropertyChange("nomeProduto", oldNomeProduto, nomeProduto);
     }
 
     public Double getPrecoCusto() {
@@ -85,7 +97,9 @@ public class Produto implements Serializable {
     }
 
     public void setPrecoCusto(Double precoCusto) {
+        Double oldPrecoCusto = this.precoCusto;
         this.precoCusto = precoCusto;
+        changeSupport.firePropertyChange("precoCusto", oldPrecoCusto, precoCusto);
     }
 
     public Double getPrecoVenda() {
@@ -93,7 +107,9 @@ public class Produto implements Serializable {
     }
 
     public void setPrecoVenda(Double precoVenda) {
+        Double oldPrecoVenda = this.precoVenda;
         this.precoVenda = precoVenda;
+        changeSupport.firePropertyChange("precoVenda", oldPrecoVenda, precoVenda);
     }
 
     public Integer getQtdeEstoque() {
@@ -101,7 +117,9 @@ public class Produto implements Serializable {
     }
 
     public void setQtdeEstoque(Integer qtdeEstoque) {
+        Integer oldQtdeEstoque = this.qtdeEstoque;
         this.qtdeEstoque = qtdeEstoque;
+        changeSupport.firePropertyChange("qtdeEstoque", oldQtdeEstoque, qtdeEstoque);
     }
 
     @Override
@@ -132,6 +150,14 @@ public class Produto implements Serializable {
     @Override
     public String toString() {
         return "util.Produto[ idProduto=" + idProduto + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

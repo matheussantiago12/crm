@@ -8,7 +8,7 @@ public class ConexaoBD {
     private static final String URL_MYSQL = "jdbc:mysql://127.0.0.1/crm";
     private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
     private static final String USER = "root";
-    private static final String PASS = "";
+    private static final String PASS = "33239322l";
     
     public static Connection conectarBanco() {
         System.out.println("iniciando conexão ...");

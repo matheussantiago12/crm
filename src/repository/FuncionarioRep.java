@@ -11,15 +11,15 @@ import util.ConexaoBD;
 
 public class FuncionarioRep {
 
-    private static final String INSERT = "insert into funcionario (login_funcionario, senha_funcionario, nome_funcionario, email_funcionario, tel_funcionario) values (?,?,?,?,?);";
+    private static final String INSERT = "insert into funcionario (login_funcionario, senha_funcionario, id_pessoa) values (?,?,?);";
 
-    private static final String SELECT = "select id_funcionario, login_funcionario, senha_funcionario, nome_funcionario, email_funcionario, tel_funcionario from funcionario";
+    private static final String SELECT = "select id_funcionario, login_funcionario, senha_funcionario from funcionario";
 
     private static final String DELETE = "delete from funcionario where id_funcionario = ?";
 
     private static final String LOGAR = "select login_funcionario, senha_funcionario from funcionario where login_funcionario = ? and senha_funcionario = ?";
 
-    private static final String UPDATE = "update funcionario set login_funcionario = ?,  senha_funcionario = ?, nome_funcionario = ?, email_funcionario = ?, tel_funcionario = ? where id_funcionario = ?";
+    private static final String UPDATE = "update funcionario set login_funcionario = ?,  senha_funcionario = ?, id_pessoa = ? where id_funcionario = ?";
 
     private Connection connection = ConexaoBD.conectarBanco();
     public PreparedStatement pstm;
@@ -27,23 +27,10 @@ public class FuncionarioRep {
     public void salvar(Funcionario funcionario) {
 
         try {
-            if (funcionario.getId() > 0) {
-                pstm = connection.prepareStatement(UPDATE);
-                pstm.setString(1, funcionario.getLoginFuncionario());
-                pstm.setString(2, funcionario.getSenhaFuncionario());
-                pstm.setString(3, funcionario.getNomeFuncionario());
-                pstm.setString(4, funcionario.getEmailFuncionario());
-                pstm.setString(5, funcionario.getTelFuncionario());
-                pstm.setInt(6, funcionario.getId());
-                
-            } else {
-                pstm = connection.prepareStatement(INSERT);
-                pstm.setString(1, funcionario.getLoginFuncionario());
-                pstm.setString(2, funcionario.getSenhaFuncionario());
-                pstm.setString(3, funcionario.getNomeFuncionario());
-                pstm.setString(4, funcionario.getEmailFuncionario());
-                pstm.setString(5, funcionario.getTelFuncionario());
-            }
+            pstm = connection.prepareStatement(INSERT);
+            pstm.setString(1, funcionario.getLoginFuncionario());
+            pstm.setString(2, funcionario.getSenhaFuncionario());
+            pstm.setInt(3, funcionario.getPessoa().getIdPessoa());
             pstm.execute();
             pstm.close();
         } catch (SQLException ex) {
@@ -57,7 +44,8 @@ public class FuncionarioRep {
             pstm = connection.prepareStatement(UPDATE);
             pstm.setString(1, funcionario.getLoginFuncionario());
             pstm.setString(2, funcionario.getSenhaFuncionario());
-            pstm.setInt(3, funcionario.getId());
+            pstm.setInt(3, funcionario.getPessoa().getIdPessoa());
+            pstm.setInt(4, funcionario.getIdFuncionario());
             pstm.execute();
             pstm.close();
         } catch (SQLException ex) {
@@ -68,7 +56,7 @@ public class FuncionarioRep {
     public void excluir(Funcionario funcionario) {
         try {
             pstm = connection.prepareStatement(DELETE);
-            pstm.setInt(1, funcionario.getId());
+            pstm.setInt(1, funcionario.getIdFuncionario());
             pstm.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Ocorreu um erro ao tentar excluir: " + ex.getMessage());
@@ -103,12 +91,9 @@ public class FuncionarioRep {
 
             while (res.next()) {
                 Funcionario f = new Funcionario();
-                f.setId(res.getInt("id_funcionario"));
+                f.setIdFuncionario(res.getInt("id_funcionario"));
                 f.setLoginFuncionario(res.getString("login_funcionario"));
                 f.setSenhaFuncionario(res.getString("senha_funcionario"));
-                f.setNomeFuncionario(res.getString("nome_funcionario"));
-                f.setEmailFuncionario(res.getString("email_funcionario"));
-                f.setTelFuncionario(res.getString("tel_funcionario"));
                 funcionario.add(f);
             }
 

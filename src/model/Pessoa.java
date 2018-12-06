@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -26,6 +29,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Pessoa.findAll", query = "SELECT p FROM Pessoa p")})
 public class Pessoa implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,7 +58,9 @@ public class Pessoa implements Serializable {
     }
 
     public void setIdPessoa(Integer idPessoa) {
+        Integer oldIdPessoa = this.idPessoa;
         this.idPessoa = idPessoa;
+        changeSupport.firePropertyChange("idPessoa", oldIdPessoa, idPessoa);
     }
 
     public String getEmailPessoa() {
@@ -60,7 +68,9 @@ public class Pessoa implements Serializable {
     }
 
     public void setEmailPessoa(String emailPessoa) {
+        String oldEmailPessoa = this.emailPessoa;
         this.emailPessoa = emailPessoa;
+        changeSupport.firePropertyChange("emailPessoa", oldEmailPessoa, emailPessoa);
     }
 
     public String getNomePessoa() {
@@ -68,7 +78,9 @@ public class Pessoa implements Serializable {
     }
 
     public void setNomePessoa(String nomePessoa) {
+        String oldNomePessoa = this.nomePessoa;
         this.nomePessoa = nomePessoa;
+        changeSupport.firePropertyChange("nomePessoa", oldNomePessoa, nomePessoa);
     }
 
     public String getTelPessoa() {
@@ -76,7 +88,9 @@ public class Pessoa implements Serializable {
     }
 
     public void setTelPessoa(String telPessoa) {
+        String oldTelPessoa = this.telPessoa;
         this.telPessoa = telPessoa;
+        changeSupport.firePropertyChange("telPessoa", oldTelPessoa, telPessoa);
     }
 
     @Override
@@ -106,7 +120,19 @@ public class Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "util.Pessoa[ idPessoa=" + idPessoa + " ]";
+        return idPessoa + " - " + nomePessoa;
+    }
+
+    public void setVisible(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

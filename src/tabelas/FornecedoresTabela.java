@@ -3,12 +3,16 @@ package tabelas;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import model.Fornecedor;
+import model.Pessoa;
 import repository.FornecedorRep;
+import repository.PessoaRep;
 
 public class FornecedoresTabela extends AbstractTableModel {
 
     private FornecedorRep frep = new FornecedorRep();
+    private PessoaRep prep = new PessoaRep();
     private List<Fornecedor> fornecedores = frep.listar();
+    private List<Pessoa> pessoas = prep.listar();
 
     @Override
     public int getRowCount() {
@@ -32,11 +36,11 @@ public class FornecedoresTabela extends AbstractTableModel {
             case 1:
                 return fornecedores.get(rowIndex).getCnpjFornecedor();
             case 2:
-                return fornecedores.get(rowIndex).getNomeFornecedor();
+                return pessoas.get(rowIndex).getNomePessoa();
             case 3:
-                return fornecedores.get(rowIndex).getEmailFornecedor();
+                return pessoas.get(rowIndex).getEmailPessoa();
             case 4: 
-                return fornecedores.get(rowIndex).getTelFornecedor();    
+                return pessoas.get(rowIndex).getTelPessoa();    
         }
         return null;
     }

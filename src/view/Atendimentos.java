@@ -27,7 +27,15 @@ public class Atendimentos extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        crmPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("crmPU").createEntityManager();
+        produtoQuery = java.beans.Beans.isDesignTime() ? null : crmPUEntityManager.createQuery("SELECT p FROM Produto p");
+        produtoList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : produtoQuery.getResultList();
+        clienteQuery = java.beans.Beans.isDesignTime() ? null : crmPUEntityManager.createQuery("SELECT c FROM Cliente c");
+        clienteList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : clienteQuery.getResultList();
+        funcionarioQuery = java.beans.Beans.isDesignTime() ? null : crmPUEntityManager.createQuery("SELECT f FROM Funcionario f");
+        funcionarioList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : funcionarioQuery.getResultList();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -66,15 +74,18 @@ public class Atendimentos extends javax.swing.JFrame {
 
         jLabel8.setText("Observações");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, produtoList, jComboBox1);
+        bindingGroup.addBinding(jComboBoxBinding);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, clienteList, jComboBox2);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         jRadioButton1.setText("Sim");
 
         jRadioButton2.setText("Não");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, funcionarioList, jComboBox3);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         jButton1.setText("Salvar");
 
@@ -172,6 +183,8 @@ public class Atendimentos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -218,6 +231,11 @@ public class Atendimentos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.util.List<model.Cliente> clienteList;
+    private javax.persistence.Query clienteQuery;
+    private javax.persistence.EntityManager crmPUEntityManager;
+    private java.util.List<model.Funcionario> funcionarioList;
+    private javax.persistence.Query funcionarioQuery;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -236,5 +254,8 @@ public class Atendimentos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private java.util.List<model.Produto> produtoList;
+    private javax.persistence.Query produtoQuery;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

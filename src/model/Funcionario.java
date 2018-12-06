@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Basic;
@@ -18,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -28,6 +31,9 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Funcionario.findAll", query = "SELECT f FROM Funcionario f")})
 public class Funcionario implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,7 +61,9 @@ public class Funcionario implements Serializable {
     }
 
     public void setIdFuncionario(Integer idFuncionario) {
+        Integer oldIdFuncionario = this.idFuncionario;
         this.idFuncionario = idFuncionario;
+        changeSupport.firePropertyChange("idFuncionario", oldIdFuncionario, idFuncionario);
     }
 
     public Pessoa getPessoa() {
@@ -71,7 +79,9 @@ public class Funcionario implements Serializable {
     }
 
     public void setLoginFuncionario(String loginFuncionario) {
+        String oldLoginFuncionario = this.loginFuncionario;
         this.loginFuncionario = loginFuncionario;
+        changeSupport.firePropertyChange("loginFuncionario", oldLoginFuncionario, loginFuncionario);
     }
 
     public String getSenhaFuncionario() {
@@ -79,7 +89,9 @@ public class Funcionario implements Serializable {
     }
 
     public void setSenhaFuncionario(String senhaFuncionario) {
+        String oldSenhaFuncionario = this.senhaFuncionario;
         this.senhaFuncionario = senhaFuncionario;
+        changeSupport.firePropertyChange("senhaFuncionario", oldSenhaFuncionario, senhaFuncionario);
     }
 
     @Override
@@ -110,6 +122,14 @@ public class Funcionario implements Serializable {
     @Override
     public String toString() {
         return "util.Funcionario[ idFuncionario=" + idFuncionario + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

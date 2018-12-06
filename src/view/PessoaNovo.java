@@ -239,7 +239,7 @@ public class PessoaNovo extends javax.swing.JFrame {
             p = pt.get(tblPessoas.getSelectedRow());
             p.setIdPessoa((int) pt.getValueAt(tblPessoas.getSelectedRow(), 0));
             definirAtributos();
-            prep.salvar(p);
+            prep.alterar(p);
             JOptionPane.showMessageDialog(rootPane, "Cliente alterado com sucesso!");
             txtNome.setText("");
             txtEmail.setText("");
